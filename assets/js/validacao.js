@@ -109,6 +109,10 @@ function maiorQue18(data) {
     return dataMais18 <= dataAtual;
 }
 
+/**
+ * It checks if the CPF is valid and if it is, it returns true, otherwise it returns false
+ * @param input - The input element that is being validated.
+ */
 
 function validaCPF(input) {
     const cpfFormatado = input.value.replaca(/\D/g, '');
@@ -123,6 +127,11 @@ function validaCPF(input) {
     input.setCustomValidity(mensagem);
 }
 
+/**
+ * It checks if the CPF is valid or not.
+ * @param cpf - The CPF number to be validated.
+ * @returns A function.
+ */
 function checaCPFRepetido(cpf) {
     const valoresRepetidos = [
         '00000000000',
@@ -151,12 +160,27 @@ function checaCPFRepetido(cpf) {
     return cpfValido;
 }
 
+/**
+ * It checks if the CPF is valid by checking the last two digits of the CPF.
+ * @param cpf - The CPF number to be validated.
+ * @returns The function chcaDigitoVerificador is being returned.
+ */
 function checaEstruturaCPF(cpf) {
     const multiplicador = 10;
 
     return chcaDigitoVerificador(cpf, multiplicador);
 }
 
+/**
+ * It's taking the first 9 digits of the cpf and splitting them into an array. Then it's multiplying
+ * each digit by a number that starts at 2 and goes up to 10. Then it's adding all of those numbers
+ * together. Then it's taking the last digit of that sum and subtracting it from 11. If the result is
+ * 10, then the last digit of the sum is 0. If the result is less than 10, then the last digit of the
+ * sum is the result
+ * @param cpf - the cpf number
+ * @param multiplicador - It's the number of digits that will be used to calculate the check digit.
+ * @returns the result of the function checaDigitoVerificador.
+ */
 function chacaDigitoVerificador(cpf, multiplicador) {
 
     if(multiplicador >= 12) {
@@ -183,6 +207,12 @@ function chacaDigitoVerificador(cpf, multiplicador) {
     return false;
 }
 
+/**
+ * If the sum of the digits is divisible by 11, return 0, otherwise return the number that, when added
+ * to the sum, will make it divisible by 11.
+ * @param soma - The sum of the numbers in the CPF.
+ * @returns The remainder of the division of the sum of the digits by 11.
+ */
 function confirmaDigito(soma) {
     return 11 - (soma % 11);
 }
