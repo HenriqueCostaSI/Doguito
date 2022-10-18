@@ -183,7 +183,7 @@ function checaCPFRepetido(cpf) {
 function checaEstruturaCPF(cpf) {
     const multiplicador = 10;
 
-    return chcaDigitoVerificador(cpf, multiplicador);
+    return checaDigitoVerificador(cpf, multiplicador);
 }
 
 /**
@@ -196,7 +196,7 @@ function checaEstruturaCPF(cpf) {
  * @param multiplicador - It's the number of digits that will be used to calculate the check digit.
  * @returns the result of the function checaDigitoVerificador.
  */
-function chacaDigitoVerificador(cpf, multiplicador) {
+function checaDigitoVerificador(cpf, multiplicador) {
 
     if(multiplicador >= 12) {
         return true;
@@ -234,7 +234,7 @@ function confirmaDigito(soma) {
 
 
 function recuperarCEP(input) {
-    const cep = input.vlue.replace(/\D/g, '');
+    const cep = input.value.replace(/\D/g, '');
     const url = `https://viacep.com.br/ws/${cep}/json/`;
     const options = {
         method: 'GET',
@@ -253,6 +253,8 @@ function recuperarCEP(input) {
                     input.setCustomValidity('Não foi possível buscar o CEP');
                     return
                 }
+
+                console.table(data)
 
                 input.setCustomValidity('');
                 preencheCamposComCEP(data)
