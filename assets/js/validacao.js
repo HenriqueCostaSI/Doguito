@@ -234,6 +234,8 @@ function confirmaDigito(soma) {
 
 
 function recuperarCEP(input) {
+
+    console.log(input.value);
     const cep = input.value.replace(/\D/g, '');
     const url = `https://viacep.com.br/ws/${cep}/json/`;
     const options = {
@@ -254,10 +256,10 @@ function recuperarCEP(input) {
                     return
                 }
 
-                console.table(data)
+                console.table(data);
 
                 input.setCustomValidity('');
-                preencheCamposComCEP(data)
+                preencheCamposComCEP(data);
                 return
             }
         )
