@@ -115,7 +115,7 @@ function validaCPF(input) {
     
     let mensagem = '';
 
-    if(!checaCPFRepetido(cpfFormatado)) {
+    if(!checaCPFRepetido(cpfFormatado) || !checaEstruturaCPF(cpfFormatado)) {
         mensagem = 'O cpf  digitado não é válido.';
     }
 
@@ -149,4 +149,40 @@ function checaCPFRepetido(cpf) {
 
 
     return cpfValido;
+}
+
+function checaEstruturaCPF(cpf) {
+    const multiplicador = 10;
+
+    return chcaDigitoVerificador(cpf, multiplicador);
+}
+
+function chacaDigitoVerificador(cpf, multiplicador) {
+
+    if(multiplicador >= 12) {
+        return true;
+    }
+
+
+    let multiplicadorInicial = multiplicador;
+    let soma = 0;
+    /* It's taking the first 9 digits of the cpf and splitting them into an array. */
+    const cpfSemDigitos = cpf.substr(0, multiplicador - 1).split('');//subst-> quero começar da posição 0 e ir até a nona separando a string, retorna um vetor
+
+    const digitoVerificador = cpf.charAt(multiplicador - 1);
+
+    for(let i = 0; multiplicadorInicial > 1;  multiplicadorInicial--) {
+        soma = soma + cpfSemDigitos[i] * multiplicadorInicial;
+        i++;
+    }
+
+    if(digitoVerificador == confirmaDigito(soma)) {
+        return checaDigitoVerificador( cpf, multiplicador + 1)
+    }
+
+    return false;
+}
+
+function confirmaDigito(soma) {
+    return 11 - (soma % 11);
 }
