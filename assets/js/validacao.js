@@ -1,22 +1,25 @@
 /**
- * It validates the input and if it's valid, it removes the class 'input-container--invalido' and the
- * error message, otherwise it adds the class 'input-container--invalido' and the error message.
+ * If the input is valid, remove the class 'input-container--invalido' from the parent element of the
+ * input and set the innerHTML of the element with the class 'input-mensagem-erro' to an empty string.
+ * If the input is not valid, add the class 'input-container--invalido' to the parent element of the
+ * input and set the innerHTML of the element with the class 'input-mensagem-erro' to the result of the
+ * function mostraMensagemDeErro.
  * @param input - the input element
  */
-export function valida(input) {
-    const tipoDeinput = input.dataset.tipo;
 
-    if(validadores[tipoDeinput]) {
-        validadores[tipoDeinput](input);
+ export function valida(input) {
+    const tipoDeInput = input.dataset.tipo
+
+    if(validadores[tipoDeInput]) {
+        validadores[tipoDeInput](input)
     }
 
     if(input.validity.valid) {
-        input.parentElement.classList.remove('input-container--invalido');
-        input.parentElement.querySelector('.input-mensagem-error').innerHTML = ''
-
+        input.parentElement.classList.remove('input-container--invalido')
+        input.parentElement.querySelector('.input-mensagem-erro').innerHTML = ''
     } else {
-        input.parentElement.classList.add('input-container--invalido');
-        input.parentElement.querySelector('.input-mensagem-error').innerHTML = mostraMensagemDeErro(tipoDeinput, input)
+        input.parentElement.classList.add('input-container--invalido')
+        input.parentElement.querySelector('.input-mensagem-erro').innerHTML = mostraMensagemDeErro(tipoDeInput, input)
     }
 }
 
@@ -60,8 +63,12 @@ const mensagensDeErro = {
         valueMissing: 'O campo de cidade não pode estar vazio'
     },
     estado: {
-        valueMissing: 'O campo de estado não pode'
+        valueMissing: 'O campo de estado não pode estar vazio'
+    },
+    preco: {
+        valueMissing: 'O campo de preço não pode estar vazio'
     }
+    
 
 };
 
@@ -71,24 +78,23 @@ const validadores = {
     cep:input => recuperarCEP(input)
 };
 
+
 /**
- * It loops through the array of error types, and if the input has that error type, it sets the message
- * to the corresponding error message
- * @param tipoDeinput - the type of input (text, email, etc)
+ * It loops through the array of error types and if the input has that error type, it sets the message
+ * to the corresponding error message.
+ * @param tipoDeInput - the type of input, such as 'nome' or 'email'
  * @param input - the input element
  * @returns the message.
  */
-function mostraMensagemDeErro(tipoDeinput, input) {
-    let mensagem = '';
-
-    tiposDeErro.forEach(tipoErro => {
-        if(input.validity[tipoErro]) {
-            mensagem = mensagensDeErro[tipoDeInput][tipoErro];
+ function mostraMensagemDeErro(tipoDeInput, input) {
+    let mensagem = ''
+    tiposDeErro.forEach(erro => {
+        if(input.validity[erro]) {
+            mensagem = mensagensDeErro[tipoDeInput][erro]
         }
     })
-
-
-    return mensagem;
+    
+    return mensagem
 }
 
 
