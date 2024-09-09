@@ -104,8 +104,9 @@ const validadores = {
  * @param input - The input element that is being validated.
  */
 function validaDataNascimento (input) {
-    const dataRecebida = new Date(input.vlue);
+    const dataRecebida = new Date(input.value);
     let mensagem = '';
+
 
     if(!maiorQue18(dataRecebida)) {
         mensagem = 'Você deve ser maior que 18 anos para se cadastrar.'
@@ -122,13 +123,18 @@ function validaDataNascimento (input) {
  * @param data - The date you want to check
  * @returns A boolean value.
  */
-function maiorQue18(data) {
-    const dataAtual = new Date();// será iniciado com a data de hoje
+function maiorQue18(dataNascimento) {
+    // Criar uma data para hoje
+    const dataAtual = new Date();
 
-    const dataMais18 = new Date(data.getUTCFullYear() + 18, data.getUTCMonth(), data.getUTCDate());
+    // Criar uma data para a pessoa ter 18 anos
+    const data18Anos = new Date(dataNascimento);
+    data18Anos.setFullYear(dataNascimento.getFullYear() + 18);
 
-    return dataMais18 <= dataAtual;
+    // Comparar as datas
+    return data18Anos <= dataAtual;
 }
+
 
 /**
  * It checks if the CPF is valid and if it is, it returns true, otherwise it returns false
